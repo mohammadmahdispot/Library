@@ -2,8 +2,8 @@ package com.example.demo.bookManagement.service.impl;
 
 import com.example.demo.bookManagement.repository.BookRepository;
 import com.example.demo.bookManagement.service.BookManagementService;
-import com.example.demo.dto.BookDto;
-import com.example.demo.entity.Book;
+import com.example.demo.bookManagement.dto.response.BookDto;
+import com.example.demo.bookManagement.entity.Book;
 import com.example.demo.payload.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class BookManagementServiceImpl implements BookManagementService {
         addBook.setIsbn(book.getIsbn());
 
         bookRepository.save(addBook);
-        return new ApiResponse(true, "با موفقیت اضافه شد");
+        return new ApiResponse(true, "operation successfully done");
     }
 
     @Override
@@ -42,28 +42,30 @@ public class BookManagementServiceImpl implements BookManagementService {
             book.setIsbn(bookDto.getIsbn());
 
             bookRepository.save(book);
-            return new ApiResponse(true, "با موفقیت انجام شد");
+            return new ApiResponse(true, "operation successfully done");
         } else
-            return new ApiResponse(false, "خطا !!!");
+            return new ApiResponse(false, "error!!");
     }
 
     @Override
     public List<BookDto> getAllBooks() {
-        return null;
+        return bookRepository.findAllBooksDto();
     }
 
     @Override
-    public BookDto getBookById(Long id) {
-        return null;
+    public BookDto getBookById(Long bookId) {
+        return bookRepository.findBookById(bookId);
+
     }
 
     public ApiResponse deleteBook(Long id) {
-        if (bookRepository.existsById(id)) {
+        if (id == null){
+            return new ApiResponse(false, "Book not found.",404);}else {
             bookRepository.deleteById(id);
-            return new ApiResponse(true, "Book deleted successfully.");
-        } else {
-            return new ApiResponse(false, "Book not found.");
+//        if (bookRepository.existsById(id)) {
+//            bookRepository.deleteById(id);
         }
+            return new ApiResponse(true,"Book deleted successfully.",200);
     }
 
     @Override

@@ -1,9 +1,8 @@
-package com.example.demo.entity;
+package com.example.demo.bookManagement.entity;
 
-import com.example.demo.enums.Role;
+import com.example.demo.bookManagement.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
